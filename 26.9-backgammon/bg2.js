@@ -7,16 +7,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Dice Roll Functionality
     function rollDice() {
-        const dice1 = Math.floor(Math.random() * 6) + 1;
-        const dice2 = Math.floor(Math.random() * 6) + 1;
+        const dice1 = getRandomDiceRoll();
+        const dice2 = getRandomDiceRoll();
         diceRolls = [dice1, dice2];
 
-        document.getElementById("dice1").textContent = dice1;
-        document.getElementById("dice2").textContent = dice2;
-
+        displayDiceRolls(dice1, dice2);
         animateDiceRolls();
         togglePlayer();
         showPlayerTooltip();
+    }
+
+    // Generate random dice roll
+    function getRandomDiceRoll() {
+        return Math.floor(Math.random() * 6) + 1;
+    }
+
+    // Display dice roll values
+    function displayDiceRolls(dice1, dice2) {
+        document.getElementById("dice1").textContent = dice1;
+        document.getElementById("dice2").textContent = dice2;
     }
 
     // Animate dice after rolling
@@ -74,25 +83,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Display a tooltip guiding the player
     function showPlayerTooltip() {
-        const tooltip = document.createElement("div");
-        tooltip.id = "player-tooltip";
-        tooltip.style.position = "absolute";
-        tooltip.style.bottom = "20px";
-        tooltip.style.left = "50%";
-        tooltip.style.transform = "translateX(-50%)";
-        tooltip.style.padding = "10px";
-        tooltip.style.backgroundColor = currentPlayer === "yellow" ? "#ffcc00" : "#ffffff";
-        tooltip.style.color = currentPlayer === "yellow" ? "#333" : "#000";
-        tooltip.style.borderRadius = "5px";
-        tooltip.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-        tooltip.style.fontSize = "1.2rem";
-        tooltip.textContent = `${currentPlayer === "yellow" ? 'Yellow' : 'White'}'s Turn! Roll the dice to continue.`;
-
+        const tooltip = createTooltip(
+            `${currentPlayer === "yellow" ? 'Yellow' : 'White'}'s Turn! Roll the dice to continue.`,
+            currentPlayer === "yellow" ? "#ffcc00" : "#ffffff",
+            currentPlayer === "yellow" ? "#333" : "#000"
+        );
         document.body.appendChild(tooltip);
 
         setTimeout(() => {
             tooltip.remove();
         }, 3000);
+    }
+
+    // Create tooltip element
+    function createTooltip(text, bgColor, textColor) {
+        const tooltip = document.createElement("div");
+        tooltip.style.position = "absolute";
+        tooltip.style.bottom = "20px";
+        tooltip.style.left = "50%";
+        tooltip.style.transform = "translateX(-50%)";
+        tooltip.style.padding = "10px";
+        tooltip.style.backgroundColor = bgColor;
+        tooltip.style.color = textColor;
+        tooltip.style.borderRadius = "5px";
+        tooltip.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+        tooltip.style.fontSize = "1.2rem";
+        tooltip.textContent = text;
+
+        return tooltip;
     }
 
     // Toggle active player
@@ -113,20 +131,16 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Tooltips for invalid moves
+    // Display tooltips for invalid moves
     function showInvalidMoveMessage() {
-        const invalidMoveTooltip = document.createElement("div");
-        invalidMoveTooltip.id = "invalid-tooltip";
-        invalidMoveTooltip.style.position = "absolute";
+        const invalidMoveTooltip = createTooltip(
+            "Invalid Move! Try Again.",
+            "#ff4444",
+            "#fff"
+        );
         invalidMoveTooltip.style.top = "50%";
         invalidMoveTooltip.style.left = "50%";
         invalidMoveTooltip.style.transform = "translate(-50%, -50%)";
-        invalidMoveTooltip.style.padding = "15px";
-        invalidMoveTooltip.style.backgroundColor = "#ff4444";
-        invalidMoveTooltip.style.color = "#fff";
-        invalidMoveTooltip.style.borderRadius = "5px";
-        invalidMoveTooltip.style.boxShadow = "0 0 15px rgba(255,0,0,0.5)";
-        invalidMoveTooltip.textContent = "Invalid Move! Try Again.";
 
         document.body.appendChild(invalidMoveTooltip);
 
