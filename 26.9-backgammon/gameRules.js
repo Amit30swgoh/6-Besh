@@ -1,46 +1,70 @@
 // gameRules.js - Enforcing the rules of Backgammon
 
 const gameRules = {
-    // Function to validate if the move is allowed
+    // Validate if the move is allowed based on the piece's current position and dice roll
     isMoveValid: function (piece, startPos, diceRoll) {
-        const targetPos = currentPlayer === "yellow" ? startPos + diceRoll : startPos - diceRoll;
+        const targetPos = this.calculateTargetPosition(startPos, diceRoll);
 
-        // Check if the move is within bounds
-        if (targetPos < 0 || targetPos >= board.children.length) return false;
+        // Ensure the target position is within bounds
+        if (!this.isWithinBounds(targetPos)) return false;
 
-        // Check if the target position is valid (implement capturing, blocking, etc.)
+        // Check if the target position is blocked by the opponent's pieces
         const targetSpot = board.children[targetPos];
         return !this.isBlocked(targetSpot);
     },
 
-    // Check if a target position is blocked by two or more opponent's pieces
+    // Calculate the target position based on the dice roll and current player's color
+    calculateTargetPosition: function (startPos, diceRoll) {
+        return currentPlayer === "yellow" ? startPos + diceRoll : startPos - diceRoll;
+    },
+
+    // Check if the target position is within the valid bounds of the board
+    isWithinBounds: function (position) {
+        return position >= 0 && position < board.children.length;
+    },
+
+    // Check if a target position is blocked by two or more of the opponent's pieces
     isBlocked: function (spot) {
-        const opponentColor = currentPlayer === "yellow" ? "white" : "yellow";
+        const opponentColor = this.getOpponentColor();
         const piecesInSpot = spot.querySelectorAll(`.${opponentColor}-piece`);
         return piecesInSpot.length >= 2;
     },
 
-    // Function to enforce capturing of a single opponent's piece
+    // Get the opponent player's color
+    getOpponentColor: function () {
+        return currentPlayer === "yellow" ? "white" : "yellow";
+    },
+
+    // Capture an opponent's piece if there is only one on the target spot
     capturePiece: function (targetSpot) {
-        const opponentColor = currentPlayer === "yellow" ? "white" : "yellow";
+        const opponentColor = this.getOpponentColor();
         const opponentPiece = targetSpot.querySelector(`.${opponentColor}-piece`);
+
         if (opponentPiece) {
-            // Move the captured piece to the bar
+            // Move the captured piece to the bar (prison)
             document.getElementById(`${opponentColor}-bar`).appendChild(opponentPiece);
         }
     },
 
-    // Function to bear off pieces once all of a player's pieces are in their home board
-    canBearOff: function (piece) {
-        const homeStart = currentPlayer === "yellow" ? 18 : 0;
-        const homeEnd = currentPlayer === "yellow" ? 23 : 5;
+    // Check if the player can bear off pieces (all pieces must be in the home quadrant)
+    canBearOff: function () {
+        const homeRange = this.getHomeRange();
 
-        // Check if all pieces are in the home quadrant
+        // Verify all pieces are within the home range
         const pieces = document.querySelectorAll(`.${currentPlayer}-piece`);
-        for (const p of pieces) {
-            const pos = Array.from(board.children).indexOf(p.parentElement);
-            if (pos < homeStart || pos > homeEnd) return false;
+        for (const piece of pieces) {
+            const pos = Array.from(board.children).indexOf(piece.parentElement);
+            if (pos < homeRange.start || pos > homeRange.end) {
+                return false;
+            }
         }
         return true;
+    },
+
+    // Get the home range for bearing off pieces, depending on the player's color
+    getHomeRange: function () {
+        return currentPlayer === "yellow"
+            ? { start: 18, end: 23 }
+            : { start: 0, end: 5 };
     }
 };
