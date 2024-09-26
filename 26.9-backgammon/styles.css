@@ -1,10 +1,9 @@
-/* styles.css - Advanced Styles for the Backgammon Game */
+/* styles.css - Improved Layout and Styling */
 
-/* Reset basic styles */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
 }
 
 body {
@@ -26,41 +25,45 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     position: relative;
-    transition: transform 1s ease-in-out;
-    transform-style: preserve-3d;
 }
 
+/* Side bars */
 #left-bar, #right-bar {
     position: absolute;
     top: 0;
     bottom: 0;
     width: 50%;
+}
+
+#left-bar {
+    left: 0;
     background-color: #333;
 }
 
 #right-bar {
     right: 0;
+    background-color: #222;
 }
 
+/* Board Layout */
 #board {
-    position: relative;
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: 1fr 1fr;
 }
 
+/* Triangles */
 .triangle {
-    position: relative;
     clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
     background-color: #fff;
     margin: 5px;
-    transition: background-color 0.3s;
 }
 
 .triangle:nth-child(even) {
     background-color: #ddd;
 }
 
+/* Pieces */
 .piece {
     width: 90%;
     height: 90%;
@@ -69,16 +72,15 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #333;
     font-weight: bold;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
+    color: #333;
 }
 
 .white-piece {
     background-color: #fff;
 }
 
+/* Dice */
 #dice-container {
     position: absolute;
     bottom: 10px;
@@ -97,9 +99,9 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    transition: transform 0.5s ease;
 }
 
+/* Roll Button */
 #roll-btn {
     position: absolute;
     bottom: 90px;
@@ -112,11 +114,6 @@ body {
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    transition: transform 0.5s ease, background-color 0.3s;
-}
-
-#roll-btn:hover {
-    background-color: #0056b3;
 }
 
 @media (max-width: 768px) {
@@ -124,13 +121,11 @@ body {
         width: 95vw;
         height: 95vw;
     }
-
     .dice {
         width: 40px;
         height: 40px;
         font-size: 1.5rem;
     }
-
     #roll-btn {
         padding: 8px 16px;
         font-size: 1rem;
