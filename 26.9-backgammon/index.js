@@ -12,12 +12,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Function to roll the dice
     function rollDice() {
-        const diceRoll1 = Math.floor(Math.random() * 6) + 1;
-        const diceRoll2 = Math.floor(Math.random() * 6) + 1;
-        dice1.textContent = diceRoll1;
-        dice2.textContent = diceRoll2;
+        const diceRoll1 = getRandomDiceRoll();
+        const diceRoll2 = getRandomDiceRoll();
 
+        displayDice(dice1, diceRoll1);
+        displayDice(dice2, diceRoll2);
+
+        toggleTurn();
+        alertTurn(turn, diceRoll1, diceRoll2);
+    }
+
+    // Generate a random dice roll
+    function getRandomDiceRoll() {
+        return Math.floor(Math.random() * 6) + 1;
+    }
+
+    // Display dice value
+    function displayDice(diceElement, rollValue) {
+        diceElement.textContent = rollValue;
+    }
+
+    // Switch turns between yellow and white
+    function toggleTurn() {
         turn = turn === 'yellow' ? 'white' : 'yellow';
+    }
+
+    // Alert the current turn and dice rolls
+    function alertTurn(turn, diceRoll1, diceRoll2) {
         alert(`It's ${turn === 'yellow' ? 'Yellow' : 'White'}'s turn! Roll: ${diceRoll1}, ${diceRoll2}`);
     }
 
@@ -30,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pieces[color].push(piece);
     }
 
-    // Initialize Board with pieces
+    // Initialize the board with default pieces
     function initializeBoard() {
         addPiece('yellow', 0);
         addPiece('yellow', 0);
@@ -38,6 +59,9 @@ document.addEventListener("DOMContentLoaded", () => {
         addPiece('white', 23);
     }
 
+    // Add event listener to the roll button
     rollBtn.addEventListener('click', rollDice);
+
+    // Set up the board initially
     initializeBoard();
 });
