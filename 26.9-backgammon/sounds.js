@@ -6,20 +6,18 @@ const sounds = {
     invalidMove: new Audio('assets/sounds/invalid-move.mp3'),
     win: new Audio('assets/sounds/win.mp3'),
 
-    playSound: function (sound) {
-        switch (sound) {
-            case 'dice':
-                this.diceRoll.play();
-                break;
-            case 'move':
-                this.pieceMove.play();
-                break;
-            case 'invalid':
-                this.invalidMove.play();
-                break;
-            case 'win':
-                this.win.play();
-                break;
+    // Play the sound corresponding to the given type
+    playSound: function (type) {
+        const soundMap = {
+            'dice': this.diceRoll,
+            'move': this.pieceMove,
+            'invalid': this.invalidMove,
+            'win': this.win
+        };
+
+        // Play the appropriate sound if the type exists
+        if (soundMap[type]) {
+            soundMap[type].play();
         }
     }
 };
