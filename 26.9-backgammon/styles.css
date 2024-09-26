@@ -1,0 +1,138 @@
+/* styles.css - Advanced Styles for the Backgammon Game */
+
+/* Reset basic styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f3f3f3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#backgammon-board {
+    width: 100vw;
+    max-width: 800px;
+    height: 100vw;
+    max-height: 800px;
+    background-color: #2f2f2f;
+    border-radius: 15px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    position: relative;
+    transition: transform 1s ease-in-out;
+    transform-style: preserve-3d;
+}
+
+#left-bar, #right-bar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background-color: #333;
+}
+
+#right-bar {
+    right: 0;
+}
+
+#board {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: 1fr 1fr;
+}
+
+.triangle {
+    position: relative;
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    background-color: #fff;
+    margin: 5px;
+    transition: background-color 0.3s;
+}
+
+.triangle:nth-child(even) {
+    background-color: #ddd;
+}
+
+.piece {
+    width: 90%;
+    height: 90%;
+    border-radius: 50%;
+    background-color: #ffcc00;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    font-weight: bold;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.white-piece {
+    background-color: #fff;
+}
+
+#dice-container {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 15px;
+}
+
+.dice {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    transition: transform 0.5s ease;
+}
+
+#roll-btn {
+    position: absolute;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.2rem;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.5s ease, background-color 0.3s;
+}
+
+#roll-btn:hover {
+    background-color: #0056b3;
+}
+
+@media (max-width: 768px) {
+    #backgammon-board {
+        width: 95vw;
+        height: 95vw;
+    }
+
+    .dice {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5rem;
+    }
+
+    #roll-btn {
+        padding: 8px 16px;
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backgammon Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        #backgammon-board {
+            width: 100vw;
+            max-width: 800px;
+            height: 100vw;
+            max-height: 800px;
+            background-color: #2f2f2f;
+            border-radius: 15px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            position: relative;
+        }
+        #left-bar, #right-bar {
+            grid-column: 1 / 2;
+            grid-row: 1 / 2;
+        }
+        #left-bar {
+            background-color: #333;
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+        }
+        #right-bar {
+            background-color: #222;
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 50%;
+        }
+        #board {
+            position: relative;
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-template-rows: 1fr 1fr;
+        }
+        .triangle {
+            position: relative;
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            background-color: #fff;
+            margin: 5px;
+        }
+        .triangle:nth-child(even) {
+            background-color: #ddd;
+        }
+        .piece {
+            width: 90%;
+            height: 90%;
+            border-radius: 50%;
+            background-color: #ffcc00;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            font-weight: bold;
+        }
+        .white-piece {
+            background-color: #fff;
+        }
+        #dice-container {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+        }
+        .dice {
+            width: 60px;
+            height: 60px;
+            background-color: white;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
+        #roll-btn {
+            position: absolute;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1.2rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+        }
+        @media (max-width: 768px) {
+            #backgammon-board {
+                width: 95vw;
+                height: 95vw;
+            }
+            .dice {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+            #roll-btn {
+                padding: 8px 16px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div id="backgammon-board">
+    <div id="left-bar"></div>
+    <div id="right-bar"></div>
+    <div id="board">
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+        <div class="triangle"></div>
+    </div>
+
+    <button id="roll-btn">Roll Dice</button>
+
+    <div id="dice-container">
+        <div class="dice" id="dice1">1</div>
+        <div class="dice" id="dice2">6</div>
+    </div>
+</div>
+
+<script>
+    const board = document.getElementById('board');
+    const rollBtn = document.getElementById('roll-btn');
+    const dice1 = document.getElementById('dice1');
+    const dice2 = document.getElementById('dice2');
+    let turn = 'yellow';
+
+    const pieces = {
+        yellow: [],
+        white: []
+    };
+
+    function rollDice() {
+        const diceRoll1 = Math.floor(Math.random() * 6) + 1;
+        const diceRoll2 = Math.floor(Math.random() * 6) + 1;
+        dice1.textContent = diceRoll1;
+        dice2.textContent = diceRoll2;
+
+        turn = turn === 'yellow' ? 'white' : 'yellow';
+        alert(`It's ${turn === 'yellow' ? 'Yellow' : 'White'}'s turn! Roll: ${diceRoll1}, ${diceRoll2}`);
+    }
+
+    function addPiece(color, position) {
+        const piece = document.createElement('div');
+        piece.classList.add('piece');
+        if (color === 'white') piece.classList.add('white-piece');
+        board.children[position].appendChild(piece);
+        pieces[color].push(piece);
+    }
+
+    function initializeBoard() {
+        addPiece('yellow', 0);
+        addPiece('yellow', 0);
+        addPiece('white', 23);
+        addPiece('white', 23);
+    }
+
+    rollBtn.addEventListener('click', rollDice);
+
+    initializeBoard();
+</script>
+
+</body>
+</html>
