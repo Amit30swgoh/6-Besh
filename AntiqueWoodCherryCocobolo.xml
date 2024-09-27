@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme displayName="Antique Cherry with Cocobolo (DC)">
+    <background name="background.jpg" numbersType="oneImage" numbersXoff="188" numbersYoff="457">
+        <numbers type="LRD" name="numbersLRD.png"/>
+        <numbers type="LRU" name="numbersLRU.png"/>
+        <numbers type="RLD" name="numbersRLD.png"/>
+        <numbers type="RLU" name="numbersRLU.png"/>
+    </background>
+
+    <dice type="sixImage" red="dice_red?.png" green="dice_green?.png" leftX="385" rightX="1000" masktype="twoImage" calculateShadow="true"/>
+
+   <cube type="sixImage" name="Cube?.png" max="64" initialType="two" leftX="107" rightX="1367" offsetY="20" centeredCubeYOffset="-8"/>
+
+<checker red="checker_red?.png" green="checker_green?.png" offsetX="0" offsetY="25" numImages="4">
+89, 189,280,371,463,554,645, 718, 796,888,978,1069,1159,1250, 1348</checker>
+
+  <indicator redLeft="red_led.png" redRight="red_led.png" 
+               greenLeft="red_led.png" greenRight="red_led.png" offsetX="18" offsetY="-29" shiftY="0" />
+</theme>
+
+
+
+
